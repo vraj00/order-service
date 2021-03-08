@@ -1,4 +1,4 @@
-##Kotlin Task - order-service
+## Kotlin Task - order-service
 
 ###  Run Application:
 
@@ -14,4 +14,4 @@ gradlew bootRun
 
 ### Notification
 
-- Success: Order successful; total amount: <TOTAL>$ : for : <LIST> : Estimated Delivery: <DATE TIME>
+- Success: Order successful; total amount: TOTAL$ : for : LIST : Estimated Delivery: DATE TIME
