@@ -4,19 +4,18 @@ import com.vr.orderservice.models.Discount
 import com.vr.orderservice.models.FruitsOrder
 import com.vr.orderservice.repository.FruitsOrderRepository
 import org.junit.Before
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.http.HttpStatus
 
 @SpringBootTest
 @AutoConfigureTestEntityManager
-class OrderServiceTest @Autowired constructor(val entityManager: TestEntityManager,
-                       val repo: FruitsOrderRepository,
-                       val orderService: OrderService) {
+class PricingServiceTest @Autowired constructor(val entityManager: TestEntityManager,
+                                                val repo: FruitsOrderRepository,
+                                                val pricingService: PricingService) {
 
     @Before
     fun setUp() {
@@ -28,21 +27,15 @@ class OrderServiceTest @Autowired constructor(val entityManager: TestEntityManag
     }
 
     @Test
-    fun placeOrder() {
-        val response = orderService.placeOrder(listOf("APPLE","APPLE","APPLE","ORANGE"), false)
-        assertTrue(response.body!!.contains("2.05$"))
+    fun calculateTotal() {
+        val total = pricingService.calculateTotal(listOf("APPLE","APPLE","APPLE","ORANGE"), false)
+        Assertions.assertEquals(2.05, total)
     }
 
     @Test
-    fun placeOrderEmpty() {
-        val response = orderService.placeOrder(listOf(), false)
-        assertTrue(response.body!!.contains("No fruits ordered"))
-        assertEquals(HttpStatus.BAD_REQUEST, response.statusCode)
+    fun calculateDiscountedTotal() {
+        val total = pricingService.calculateTotal(listOf("APPLE","APPLE","APPLE","ORANGE"), true)
+        Assertions.assertEquals(1.45, total)
     }
 
-    @Test
-    fun placeOrderWithDiscount() {
-        val response = orderService.placeOrder(listOf("APPLE","APPLE","APPLE","ORANGE"), true)
-        assertTrue(response.body!!.contains("1.45$"))
-    }
 }

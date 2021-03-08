@@ -7,12 +7,12 @@ import java.text.DecimalFormat
 @Service
 class OrderService(private val pricingService: PricingService) {
 
-    fun placeOrder(fruits: List<String>): ResponseEntity<String> {
+    fun placeOrder(fruits: List<String>, hasDiscount: Boolean): ResponseEntity<String> {
         if (fruits.isNullOrEmpty()) {
             return ResponseEntity.badRequest().body("No fruits ordered!!!")
         }
 
-        val total = pricingService.calculateTotal(fruits)
+        val total = pricingService.calculateTotal(fruits, hasDiscount)
         val df = DecimalFormat("#,##0.00")
 
         return ResponseEntity.ok().body("Total amount for order: ${fruits.joinToString()} = ${df.format(total)}$")

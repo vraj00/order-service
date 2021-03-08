@@ -10,12 +10,13 @@ import kotlin.streams.toList
 class OrderController(private val orderService: OrderService) {
 
     @PostMapping("orderFruits")
-    fun orderFruits(@RequestBody order: OrderReq): String {
+    fun orderFruits(@RequestBody order: OrderReq,
+                    @RequestParam("discount") discount: String = "false"): String {
         var fruits: List<String> = ArrayList()
         if ( order.getFruits().isNotEmpty()) {
             fruits = order.getFruits().split(",").stream().map{item -> item.toUpperCase()}.toList()
         }
-        val response = orderService.placeOrder(fruits)
+        val response = orderService.placeOrder(fruits, discount.toBoolean())
         return response.toString()
     }
 
