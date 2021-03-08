@@ -32,6 +32,11 @@ class OrderControllerTest( @Autowired private val orderService: OrderService) {
                 Discount(0,"APPLE", 0.60, 2),
                 Discount(1,"ORANGE", 0.50, 3)
             ))
+
+        Mockito.`when`(repo.findByFruitName("APPLE"))
+            .thenReturn(FruitsOrder("APPLE", 0.60, 9))
+        Mockito.`when`(repo.findByFruitName("ORANGE"))
+            .thenReturn(FruitsOrder("ORANGE", 0.25, 7))
     }
 
     @Test

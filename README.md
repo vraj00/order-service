@@ -9,5 +9,9 @@ gradlew bootRun
 ### Post orders
 
 ```shell
-    curl -X  POST http://localhost:8080/orderFruits --data "{\"fruits\":\"Apple,Orange\"}" -H "Content-Type: application/json"
+    curl -X  POST http://localhost:8080/orderFruits?discount=true --data "{\"fruits\":\"Apple,Apple,Apple,Orange\"}" -H "Content-Type: application/json"
 ```
+
+###Notification
+
+- Success: Order successful; total amount: <TOTAL>$ : for : <LIST> : Estimated Delivery: <DATE TIME>

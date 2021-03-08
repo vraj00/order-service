@@ -44,5 +44,7 @@ class OrderServiceTest @Autowired constructor(val entityManager: TestEntityManag
     fun placeOrderWithDiscount() {
         val response = orderService.placeOrder(listOf("APPLE","APPLE","APPLE","ORANGE"), true)
         assertTrue(response.body!!.contains("1.45$"))
+        val fruit = repo.findByFruitName("APPLE")
+        assertEquals(4, fruit.fruitQty)
     }
 }
